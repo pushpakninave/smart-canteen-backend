@@ -90,3 +90,10 @@
     1. How would you handle a situation where the SECRET_KEY needs to be rotated?
 
     2. What would you do if you discovered tokens were being generated with incorrect expiration times?
+
+
+### `AuthEntryPointJwt`
+
+This is a Spring Security component that handles unauthorized access attempts in your application. It implements Spring's AuthenticationEntryPoint interface, which is the entry point for handling authentication failures.
+
+- `The commence() Method`: This is the heart of the class that gets called when...An **unauthenticated user** tries to access a secured resource or **Authentication fails** (invalid/expired token, etc.)
