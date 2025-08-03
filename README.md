@@ -97,3 +97,39 @@
 This is a Spring Security component that handles unauthorized access attempts in your application. It implements Spring's AuthenticationEntryPoint interface, which is the entry point for handling authentication failures.
 
 - `The commence() Method`: This is the heart of the class that gets called when...An **unauthenticated user** tries to access a secured resource or **Authentication fails** (invalid/expired token, etc.)
+
+
+## UML
+
+```
+┌───────────────────────────────────────┐
+│        <<interface>>                  │
+│          UserDetails                  │
+├───────────────────────────────────────┤
+│ + getAuthorities(): Collection        │
+│ + getPassword(): String               │
+│ + getUsername(): String               │
+│ + isAccountNonExpired(): boolean      │
+│ + isAccountNonLocked(): boolean       │
+│ + isCredentialsNonExpired(): boolean  │
+│ + isEnabled(): boolean                │
+└───────────────────────────────────────┘
+                     ▲
+                     │ implements
+                     │
+┌───────────────────────────────────────┐
+│          UserDetailsImpl              │
+├───────────────────────────────────────┤
+│ - id: Long                            │
+│ - username: String                    │
+│ - email: String                       │
+│ - password: String                    ││ - authorities: Collection<GrantedAuthority> │
+├───────────────────────────────────────┤
+│ + UserDetailsImpl(id, username,       │
+│   email, password, authorities)       │
+│ + build(user, authorities):           │
+│   UserDetailsImpl                     │
+│ + equals(Object): boolean             │
+│ + hashCode(): int                     │
+└───────────────────────────────────────┘
+```
