@@ -4,7 +4,7 @@ package com.smartcanteen.controller;
 
 import com.smartcanteen.dto.PaymentRequest;
 import com.smartcanteen.dto.PaymentResponse;
-import com.smartcanteen.login.enity.EPaymentStatus; // Import the payment status enum
+import com.smartcanteen.login.entity.EPaymentStatus; // Import the payment status enum
 import com.smartcanteen.service.PaymentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
