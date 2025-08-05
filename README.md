@@ -133,3 +133,9 @@ This is a Spring Security component that handles unauthorized access attempts in
 │ + hashCode(): int                     │
 └───────────────────────────────────────┘
 ```
+
+### modifications : 
+
+1. Order - `entity`
+- not storing totalPrice in db
+2. `UserDetailsImpl` - need to understand
