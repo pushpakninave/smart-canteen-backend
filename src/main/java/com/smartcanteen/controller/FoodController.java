@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+// handles all fooditems
 @RestController
 @RequestMapping("/api/food")
 public class FoodController {
