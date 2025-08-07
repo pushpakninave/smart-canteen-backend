@@ -1,4 +1,3 @@
-// E:\Salman(29-06-2025)\smart-canteen-backend\src\main\java\com\smartcanteen\security\User.java
 
 package com.smartcanteen.security; 
 

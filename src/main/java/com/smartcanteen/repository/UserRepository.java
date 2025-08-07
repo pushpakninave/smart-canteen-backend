@@ -1,4 +1,3 @@
-// E:\Salman(29-06-2025)\smart-canteen-backend\src\main\java\com\smartcanteen\repository\UserRepository.java
 
 package com.smartcanteen.repository;
 
