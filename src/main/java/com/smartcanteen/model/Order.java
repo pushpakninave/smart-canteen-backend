@@ -1,4 +1,4 @@
-
+Order Entity
 package com.smartcanteen.model;
 
 import com.smartcanteen.login.enity.EOrderStatus;

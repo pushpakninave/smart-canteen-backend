@@ -1,3 +1,4 @@
+FoodItem Entity
 package com.smartcanteen.model;
 
 import jakarta.persistence.*;
