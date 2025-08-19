@@ -5,7 +5,7 @@ The `smart-canteen-backend` project is a robust backend system designed to manag
 
 ## Visual Overview
 
-![alt text](<flowchart_Mermaid Chart-2025-08-19-063930.svg>)
+![alt text](src/main/resources/static/images/seq0.svg)
 
 ## Chapters
 
@@ -124,7 +124,7 @@ The `@Entity` and other annotations we saw earlier act like instructions. When y
 
 Here's a simple flow:
 
-![alt text](sequence2025-08-19-064901.svg)
+![alt text](src/main/resources/static/images/sequence2025-08-19-064901.svg)
 
 ### Code Examples - Diving Deeper into Relationships
 
@@ -313,7 +313,7 @@ Let's trace how DTOs help when you add a "Pizza" to the canteen menu.
 
 Here's a simplified flow:
 
-![alt text](seq1-2025-08-19-065722.svg)
+![alt text](src/main/resources/static/images/seq1-2025-08-19-065722.svg)
 
 **How does the "conversion" (Step 2 and 5) happen in code?**
 
@@ -513,7 +513,7 @@ Imagine the user wants to add "Pizza" from the Smart Canteen app:
 
 Here’s a simplified flow of how a "save" operation works:
 
-![alt text](seq2-2025-08-19-065950.svg)
+![alt text](src/main/resources/static/images/seq2-2025-08-19-065950.svg)
 
 **What is the "hidden implementation"?**
 When your application starts, Spring Data JPA automatically inspects all your `JpaRepository` interfaces. For each one, it **dynamically creates a real Java class** that implements all the methods (like `save`, `findById`, `deleteById`, and your custom `findByName`). This generated class contains the actual code to connect to the database, translate your method calls into SQL queries, execute them, and convert the results back into Java objects. You never see this generated code, but it's working hard for you!
@@ -751,7 +751,7 @@ public class OrderService {
 
 Let's trace how the `placeOrder` method within our `OrderService` orchestrates the process:
 
-![alt text](<Untitled diagram _ Mermaid Chart-2025-08-19-070207.svg>)
+![alt text](src/main/resources/static/images/seq5.svg)
 
 As you can see, the `OrderService` acts as the central coordinator, pulling information from different [repositories](03_data_repositories_.md), applying rules, and putting everything together before sending the final data back. The `@Transactional` annotation ensures that steps 3-17 are treated as one single, unbreakable operation.
 
@@ -984,7 +984,7 @@ An HTTP `201 Created` status code and the details of the newly created order in 
 
 Let's trace the journey of a request for available food items:
 
-![alt text](seq3-2025-08-19-073042.svg)
+![alt text](src/main/resources/static/images/seq3-2025-08-19-073042.svg)
 
 As you can see, the Controller is the first point of contact. It acts as a lightweight receptionist, quickly passing the request to the correct "chef" ([Business Service](04_business_services_.md)) and then preparing the final "dish" ([Response DTO](02_data_transfer_objects__dtos__.md)) to send back. It doesn't cook; it directs and presents!
 
@@ -1306,7 +1306,7 @@ Finally, the `AuthEntryPointJwt` is the component that springs into action when 
 
 Let's trace how the system handles a request for a protected resource, ensuring only authorized users gain access:
 
-![alt text](seq4-2025-08-19-073312.svg)
+![alt text](src/main/resources/static/images/seq4-2025-08-19-073312.svg)
 
 **Simplified Flow:**
 1.  Your app sends a request to the backend with your JWT token.
