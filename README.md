@@ -10,19 +10,18 @@ The `smart-canteen-backend` project is a robust backend system designed to manag
 ## Chapters
 
 1. [Data Models (Entities)
-](01_data_models__entities__.md)
+](#chapter-1-data-models-entities)
 2. [Data Transfer Objects (DTOs)
-](02_data_transfer_objects__dtos__.md)
+](#chapter-2-data-transfer-objects-dtos)
 3. [Data Repositories
-](03_data_repositories_.md)
+](#chapter-3-data-repositories)
 4. [Business Services
-](04_business_services_.md)
+](#chapter-4-business-services)
 5. [API Endpoints (Controllers)
-](05_api_endpoints__controllers__.md)
+](#chapter-5-api-endpoints-controllers)
 6. [Security Configuration
-](06_security_configuration_.md)
+](#chapter-6-security-configuration)
 
----
 # Chapter 1: Data Models (Entities)
 
 Welcome to the first chapter of our Smart Canteen Backend tutorial! If you're new to backend development, don't worry – we'll take it one step at a time.
@@ -186,12 +185,11 @@ These relationships allow our different data models to be linked together, formi
 
 In this chapter, we learned that **Data Models (Entities)** are the fundamental blueprints for structuring and storing all the important information in our Smart Canteen backend. They define what information belongs to a `Fooditem`, an `Order`, or a `User`, and how these pieces of information are connected through relationships. Understanding these entities is the first crucial step in building any robust backend application.
 
-Now that we know how data is *stored* in our database using entities, how do we efficiently move and present this data within our application and to other parts of the system (like the user interface)? That's where [Data Transfer Objects (DTOs)](02_data_transfer_objects__dtos__.md) come in!
+Now that we know how data is *stored* in our database using entities, how do we efficiently move and present this data within our application and to other parts of the system (like the user interface)? That's where [Data Transfer Objects (DTOs)](#chapter-2-data-transfer-objects-dtos) come in!
 
----
 # Chapter 2: Data Transfer Objects (DTOs)
 
-Welcome back to our Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](01_data_models__entities__.md), we learned how to create "blueprints" for our data, like `Fooditem` or `Order`, so our application knows how to store information in a database. These blueprints contain *all* the details needed for storage.
+Welcome back to our Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](#chapter-1-data-models-entities), we learned how to create "blueprints" for our data, like `Fooditem` or `Order`, so our application knows how to store information in a database. These blueprints contain *all* the details needed for storage.
 
 But now, imagine this: you've got a detailed blueprint for a house. If you just want to *tell* someone about the house, do you give them the full, highly technical blueprint with every pipe and wire? Probably not! You'd give them a simpler summary: "It's a 3-bedroom, 2-bathroom house with a garden."
 
@@ -201,7 +199,7 @@ Our Smart Canteen system needs to talk a lot:
 *   The frontend (like a mobile app or website) needs to *send* information to the backend (e.g., "Add a new Pizza!").
 *   The backend needs to *send* information back to the frontend (e.g., "Here's the list of all available food items.").
 
-When this communication happens, we often **don't need all the details** that are stored in our [Data Models (Entities)](01_data_models__entities__.md).
+When this communication happens, we often **don't need all the details** that are stored in our [Data Models (Entities)](#chapter-1-data-models-entities).
 For example:
 *   When you **add a new `Fooditem`**, the frontend doesn't know its unique `id` yet (because the database generates it). It just needs to send the `name`, `description`, and `price`.
 *   When you **list `User`s**, the backend definitely **should NOT send the user's `password`** to the frontend, even though it's stored in the `User` entity for security.
@@ -212,7 +210,7 @@ Sending too much unnecessary information, or sensitive information, is bad for p
 ### What are Data Transfer Objects (DTOs)?
 
 **Think of DTOs as standardized forms or menus for communication.**
-Instead of directly sending our detailed [Data Models (Entities)](01_data_models__entities__.md) (which are tied to our database structure), DTOs define exactly what information is expected when you send something, or what will be sent back when you receive something.
+Instead of directly sending our detailed [Data Models (Entities)](#chapter-1-data-models-entities) (which are tied to our database structure), DTOs define exactly what information is expected when you send something, or what will be sent back when you receive something.
 
 They are simple Java classes, just like our entities, but their **only job is to carry data between different parts of our application**, especially between the frontend and the backend.
 
@@ -305,9 +303,9 @@ Let's trace how DTOs help when you add a "Pizza" to the canteen menu.
 1.  **Frontend Creates a `FoodItemRequest`**: The website gathers the `name` ("Pizza"), `description`, `price`, and `isAvailable` you typed. It packages this information into a `FoodItemRequest` DTO object.
 2.  **Frontend Sends Request**: This `FoodItemRequest` DTO is sent over the internet to our backend system.
 3.  **Backend Receives `FoodItemRequest`**: The backend gets the `FoodItemRequest` DTO. It then "unpacks" this DTO to get the raw `name`, `description`, etc.
-4.  **Backend Creates an [Entity](01_data_models__entities__.md)**: Using the data from the DTO, the backend creates a `Fooditem` [entity](01_data_models__entities__.md) object. This `Fooditem` entity is the detailed blueprint, ready to be saved in the database.
-5.  **Backend Saves the [Entity](01_data_models__entities__.md)**: The backend saves this `Fooditem` [entity](01_data_models__entities__.md) to the database. The database then generates a unique `id` for our new Pizza.
-6.  **Backend Creates a `FoodItemResponse`**: After saving, the backend takes the newly saved `Fooditem` [entity](01_data_models__entities__.md) (which now has an `id` and timestamps!) and converts it into a `FoodItemResponse` DTO. This DTO is specifically designed for the frontend.
+4.  **Backend Creates an [Entity](#chapter-1-data-models-entities)**: Using the data from the DTO, the backend creates a `Fooditem` [entity](#chapter-1-data-models-entities) object. This `Fooditem` entity is the detailed blueprint, ready to be saved in the database.
+5.  **Backend Saves the [Entity](#chapter-1-data-models-entities)**: The backend saves this `Fooditem` [entity](#chapter-1-data-models-entities) to the database. The database then generates a unique `id` for our new Pizza.
+6.  **Backend Creates a `FoodItemResponse`**: After saving, the backend takes the newly saved `Fooditem` [entity](#chapter-1-data-models-entities) (which now has an `id` and timestamps!) and converts it into a `FoodItemResponse` DTO. This DTO is specifically designed for the frontend.
 7.  **Backend Sends Response**: The `FoodItemResponse` DTO is sent back to the frontend.
 8.  **Frontend Displays Success**: The frontend receives the `FoodItemResponse` and uses the `id`, `name`, and other details to show a "Pizza added successfully!" message.
 
@@ -317,7 +315,7 @@ Here's a simplified flow:
 
 **How does the "conversion" (Step 2 and 5) happen in code?**
 
-You won't typically write these conversions directly inside your DTO files. Instead, other parts of the backend (which we'll learn about in later chapters, like [Business Services](04_business_services_.md) or [API Endpoints (Controllers)](05_api_endpoints__controllers__.md)) handle this. For now, think of it as a logical step:
+You won't typically write these conversions directly inside your DTO files. Instead, other parts of the backend (which we'll learn about in later chapters, like [Business Services](#chapter-4-business-services) or [API Endpoints (Controllers)](#chapter-5-api-endpoints-controllers)) handle this. For now, think of it as a logical step:
 
 ```java
 // CONCEPTUAL EXAMPLE: How data flows, not actual file content
@@ -363,7 +361,7 @@ This "conversion" process is crucial for making DTOs useful. It allows us to con
 
 ### DTOs vs. Entities: A Quick Comparison
 
-It's important to understand the difference between DTOs and [Entities](01_data_models__entities__.md):
+It's important to understand the difference between DTOs and [Entities](#chapter-1-data-models-entities):
 
 | Feature         | Data Model (Entity)                                | Data Transfer Object (DTO)                         |
 | :-------------- | :------------------------------------------------- | :------------------------------------------------- |
@@ -377,13 +375,13 @@ It's important to understand the difference between DTOs and [Entities](01_data_
 
 In this chapter, we learned that **Data Transfer Objects (DTOs)** are essential tools for clean and efficient communication in our Smart Canteen backend. They act like standardized forms, allowing us to define exactly what information flows into and out of our system, hiding internal database complexities and ensuring security.
 
-Now that we know how our data is modeled ([Entities](01_data_models__entities__.md)) and how it travels between systems (DTOs), the next logical step is to understand how our application actually **saves** these entities to the database and **fetches** them back. That's precisely what we'll explore in [Chapter 3: Data Repositories](03_data_repositories_.md)!
+Now that we know how our data is modeled ([Entities](#chapter-1-data-models-entities)) and how it travels between systems (DTOs), the next logical step is to understand how our application actually **saves** these entities to the database and **fetches** them back. That's precisely what we'll explore in [Chapter 3: Data Repositories](#chapter-3-data-repositories)!
 
----
+
 
 # Chapter 3: Data Repositories
 
-Welcome back to the Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](01_data_models__entities__.md), we learned how to design the "blueprints" for our data (like `Fooditem` or `Order`). Then, in [Chapter 2: Data Transfer Objects (DTOs)](02_data_transfer_objects__dtos__.md), we saw how to create "forms" for cleanly sending data into and out of our system.
+Welcome back to the Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](#chapter-1-data-models-entities), we learned how to design the "blueprints" for our data (like `Fooditem` or `Order`). Then, in [Chapter 2: Data Transfer Objects (DTOs)](#chapter-2-data-transfer-objects-dtos), we saw how to create "forms" for cleanly sending data into and out of our system.
 
 Now, we have these beautiful data blueprints, but how do we actually tell our computer program to **store them in a database**? Or, how do we ask the database to **give us all the pizzas** or **find a specific order**?
 
@@ -404,7 +402,7 @@ Each repository (librarian) specializes in one type of data (e.g., `FoodItemRepo
 
 ### What are Data Repositories?
 
-In our Smart Canteen backend, **Data Repositories are interfaces (like contracts)** that define how we interact with our database for a specific [Data Model (Entity)](01_data_models__entities__.md).
+In our Smart Canteen backend, **Data Repositories are interfaces (like contracts)** that define how we interact with our database for a specific [Data Model (Entity)](#chapter-1-data-models-entities).
 
 The amazing part? We usually **don't write the actual code** that connects to the database and performs these operations! A powerful tool called **Spring Data JPA** (which is part of our Spring Boot framework) does it for us automatically. We just define *what* we want to do, and Spring Data JPA takes care of *how* it's done.
 
@@ -444,7 +442,7 @@ public interface FoodItemRepository extends JpaRepository<Fooditem, Long> {
     *   We define an `interface` (a contract) named `FoodItemRepository`.
     *   It `extends JpaRepository`. This is the crucial part. `JpaRepository` is a powerful interface provided by Spring Data JPA. When we extend it, our `FoodItemRepository` automatically inherits a bunch of common database operations!
     *   `<Fooditem, Long>`: These are two important pieces of information we give to `JpaRepository`:
-        *   `Fooditem`: This tells the repository *which* [Entity](01_data_models__entities__.md) it's responsible for managing (our `Fooditem` blueprint).
+        *   `Fooditem`: This tells the repository *which* [Entity](#chapter-1-data-models-entities) it's responsible for managing (our `Fooditem` blueprint).
         *   `Long`: This tells the repository the *type* of the unique ID for `Fooditem` (in our `Fooditem` entity, the `id` field is `Long`).
 
 ### What Methods Do We Get for Free?
@@ -473,7 +471,7 @@ List<Fooditem> findByAvailableTodayTrue();
 We didn't write any code for these either! This is another amazing feature of Spring Data JPA: **derived query methods**.
 
 *   Spring Data JPA looks at the method names (e.g., `findByName`, `findByAvailableTodayTrue`).
-*   It then intelligently *derives* (figures out) what database query to run based on the method name and the fields in our `Fooditem` [entity](01_data_models__entities__.md).
+*   It then intelligently *derives* (figures out) what database query to run based on the method name and the fields in our `Fooditem` [entity](#chapter-1-data-models-entities).
 *   For example, `findByName(String name)` translates to: "Find a `Fooditem` where its `name` field matches the `name` provided."
 *   `findByAvailableTodayTrue()` translates to: "Find all `Fooditem`s where the `availableToday` field is `true`."
 
@@ -481,13 +479,13 @@ This saves us a huge amount of time and prevents errors because we don't have to
 
 ### Solving a Use Case: Adding a New Food Item
 
-Let's revisit our example of adding a new food item ("Pizza"). We've learned about [Entities](01_data_models__entities__.md) and [DTOs](02_data_transfer_objects__dtos__.md). Now, let's see where the `FoodItemRepository` fits in.
+Let's revisit our example of adding a new food item ("Pizza"). We've learned about [Entities](#chapter-1-data-models-entities) and [DTOs](#chapter-2-data-transfer-objects-dtos). Now, let's see where the `FoodItemRepository` fits in.
 
 Imagine the user wants to add "Pizza" from the Smart Canteen app:
 
-1.  **Frontend**: Creates a `FoodItemRequest` [DTO](02_data_transfer_objects__dtos__.md) with `name="Pizza"`, `price=12.50`, etc. and sends it to the backend.
-2.  **Backend (later in [Business Services](04_business_services_.md))**: Receives the `FoodItemRequest` [DTO](02_data_transfer_objects__dtos__.md).
-3.  **Backend (later in [Business Services](04_business_services_.md))**: Converts the `FoodItemRequest` [DTO](02_data_transfer_objects__dtos__.md) into a `Fooditem` [Entity](01_data_models__entities__.md). At this point, the `Fooditem` entity does *not* have an `id` yet.
+1.  **Frontend**: Creates a `FoodItemRequest` [DTO](#chapter-2-data-transfer-objects-dtos) with `name="Pizza"`, `price=12.50`, etc. and sends it to the backend.
+2.  **Backend (later in [Business Services]#chapter-4-business-services))**: Receives the `FoodItemRequest` [DTO](#chapter-2-data-transfer-objects-dtos).
+3.  **Backend (later in [Business Services]#chapter-4-business-services))**: Converts the `FoodItemRequest` [DTO](#chapter-2-data-transfer-objects-dtos) into a `Fooditem` [Entity](#chapter-1-data-models-entities). At this point, the `Fooditem` entity does *not* have an `id` yet.
 4.  **Backend (using the Repository)**: Asks the `FoodItemRepository` to `save()` this new `Fooditem` entity.
     ```java
     // CONCEPTUAL EXAMPLE: This happens inside a 'Service' class (Chapter 4)
@@ -505,9 +503,9 @@ Imagine the user wants to add "Pizza" from the Smart Canteen app:
     System.out.println("Pizza saved with ID: " + savedPizzaEntity.getId());
     ```
 5.  **Database**: Receives the request from the repository, stores the "Pizza" data in the `food_items` table, and generates a unique `id` for it.
-6.  **Repository**: Returns the saved `Fooditem` [Entity](01_data_models__entities__.md) (now with its `id`) back to the backend code.
-7.  **Backend (later in [Business Services](04_business_services_.md))**: Converts the saved `Fooditem` [Entity](01_data_models__entities__.md) into a `FoodItemResponse` [DTO](02_data_transfer_objects__dtos__.md) (which now includes the `id`).
-8.  **Backend**: Sends the `FoodItemResponse` [DTO](02_data_transfer_objects__dtos__.md) back to the frontend.
+6.  **Repository**: Returns the saved `Fooditem` [Entity](#chapter-1-data-models-entities) (now with its `id`) back to the backend code.
+7.  **Backend (later in [Business Services]#chapter-4-business-services))**: Converts the saved `Fooditem` [Entity](#chapter-1-data-models-entities) into a `FoodItemResponse` [DTO](#chapter-2-data-transfer-objects-dtos) (which now includes the `id`).
+8.  **Backend**: Sends the `FoodItemResponse` [DTO](#chapter-2-data-transfer-objects-dtos) back to the frontend.
 
 ### How Data Repositories Work Behind the Scenes
 
@@ -520,9 +518,9 @@ When your application starts, Spring Data JPA automatically inspects all your `J
 
 ### Other Important Canteen Repositories
 
-Our Smart Canteen backend uses several other repositories, each responsible for its own [Entity](01_data_models__entities__.md):
+Our Smart Canteen backend uses several other repositories, each responsible for its own [Entity](#chapter-1-data-models-entities):
 
-*   **`OrderRepository`**: Manages `Order` [entities](01_data_models__entities__.md).
+*   **`OrderRepository`**: Manages `Order` [entities](#chapter-1-data-models-entities).
     ```java
     // File: src/main/java/com/smartcanteen/repository/OrderRepository.java
     public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -530,7 +528,7 @@ Our Smart Canteen backend uses several other repositories, each responsible for 
         // ... other methods
     }
     ```
-*   **`UserRepository`**: Manages `User` [entities](01_data_models__entities__.md).
+*   **`UserRepository`**: Manages `User` [entities](#chapter-1-data-models-entities).
     ```java
     // File: src/main/java/com/smartcanteen/repository/UserRepository.java
     public interface UserRepository extends JpaRepository<User, Long> {
@@ -539,11 +537,11 @@ Our Smart Canteen backend uses several other repositories, each responsible for 
         // ... other methods
     }
     ```
-*   **`OrderItemRepository`**: Manages `OrderItem` [entities](01_data_models__entities__.md).
-*   **`PaymentRepository`**: Manages `Payment` [entities](01_data_models__entities__.md).
-*   **`RoleRepository`**: Manages `Role` [entities](01_data_models__entities__.md).
+*   **`OrderItemRepository`**: Manages `OrderItem` [entities](#chapter-1-data-models-entities).
+*   **`PaymentRepository`**: Manages `Payment` [entities](#chapter-1-data-models-entities).
+*   **`RoleRepository`**: Manages `Role` [entities](#chapter-1-data-models-entities).
 
-Each one follows the same pattern: it's an `interface` that `extends JpaRepository` for a specific [Entity](01_data_models__entities__.md) and its ID type, potentially adding custom "derived query methods" as needed.
+Each one follows the same pattern: it's an `interface` that `extends JpaRepository` for a specific [Entity](#chapter-1-data-models-entities) and its ID type, potentially adding custom "derived query methods" as needed.
 
 ### Repositories vs. Entities: A Quick Comparison
 
@@ -560,15 +558,15 @@ It's helpful to compare what we've learned so far:
 
 ### Conclusion
 
-In this chapter, we discovered that **Data Repositories** are incredibly powerful tools that simplify how our Smart Canteen backend interacts with the database. By extending `JpaRepository` and using Spring Data JPA's "magic" (derived query methods), we can perform complex database operations with very little code. Repositories act as the crucial bridge between our Java objects ([Entities](01_data_models__entities__.md)) and the actual database.
+In this chapter, we discovered that **Data Repositories** are incredibly powerful tools that simplify how our Smart Canteen backend interacts with the database. By extending `JpaRepository` and using Spring Data JPA's "magic" (derived query methods), we can perform complex database operations with very little code. Repositories act as the crucial bridge between our Java objects ([Entities](#chapter-1-data-models-entities)) and the actual database.
 
-Now that we understand how data is modeled, transferred, and stored, the next logical step is to learn about the "brains" of our application: the code that contains the actual business rules and uses these repositories to perform tasks. That's what we'll explore in [Chapter 4: Business Services](04_business_services_.md)!
+Now that we understand how data is modeled, transferred, and stored, the next logical step is to learn about the "brains" of our application: the code that contains the actual business rules and uses these repositories to perform tasks. That's what we'll explore in [Chapter 4: Business Services]#chapter-4-business-services)!
 
----
+
 
 # Chapter 4: Business Services
 
-Welcome back to our Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](01_data_models__entities__.md), we designed the "blueprints" for our data. In [Chapter 2: Data Transfer Objects (DTOs)](02_data_transfer_objects__dtos__.md), we learned how to create "forms" for smooth data communication. And in [Chapter 3: Data Repositories](03_data_repositories_.md), we found our "librarians" that handle saving and fetching data from the database.
+Welcome back to our Smart Canteen Backend tutorial! In [Chapter 1: Data Models (Entities)](#chapter-1-data-models-entities), we designed the "blueprints" for our data. In [Chapter 2: Data Transfer Objects (DTOs)](#chapter-2-data-transfer-objects-dtos), we learned how to create "forms" for smooth data communication. And in [Chapter 3: Data Repositories](#chapter-3-data-repositories), we found our "librarians" that handle saving and fetching data from the database.
 
 Now, imagine you have all these pieces: ingredients (data entities), recipe cards (DTOs), and pantry organizers (repositories). What's missing? The actual **chef** who takes the order, checks ingredients, follows the recipe, cooks the dish, and serves it!
 
@@ -583,7 +581,7 @@ Our Smart Canteen system isn't just about storing data; it needs to *do* things.
 
 This is more than just saving a single piece of data. It's a **complex operation** that involves multiple steps, checks, and interactions with different parts of our system (like looking up food items and saving orders). This is precisely the job of **Business Services**.
 
-**Think of Business Services as the expert chefs in our canteen.** They take raw ingredients ([data from repositories](03_data_repositories_.md)), apply recipes ([business rules](03_data_repositories_.md)), and prepare the final dishes (complex operations).
+**Think of Business Services as the expert chefs in our canteen.** They take raw ingredients ([data from repositories](#chapter-3-data-repositories)), apply recipes ([business rules](#chapter-3-data-repositories)), and prepare the final dishes (complex operations).
 
 ### What are Business Services?
 
@@ -593,9 +591,9 @@ Their main responsibilities include:
 *   **Orchestrating Operations**: They coordinate multiple steps to complete a task (e.g., placing an order involves checking food, calculating price, then saving).
 *   **Applying Business Rules**: They enforce rules like "a food item must be available to be ordered" or "a user cannot delete their own account if they are the last admin."
 *   **Managing Transactions**: They ensure that a series of database operations either *all succeed* or *all fail together*. This is crucial for keeping our data consistent (e.g., an order and its items are saved together, or none are).
-*   **Converting Data**: They convert [Request DTOs](02_data_transfer_objects__dtos__.md) received from the outside into [Entities](01_data_models__entities__.md) for saving, and then convert saved [Entities](01_data_models__entities__.md) back into [Response DTOs](02_data_transfer_objects__dtos__.md) to send back.
+*   **Converting Data**: They convert [Request DTOs](#chapter-2-data-transfer-objects-dtos) received from the outside into [Entities](#chapter-1-data-models-entities) for saving, and then convert saved [Entities](#chapter-1-data-models-entities) back into [Response DTOs](#chapter-2-data-transfer-objects-dtos) to send back.
 
-Services typically interact with [Data Repositories](03_data_repositories_.md) to get and save [Entities](01_data_models__entities__.md). They also perform validation and apply business-specific logic that doesn't belong in the simpler [Repositories](03_data_repositories_.md) or [Entities](01_data_models__entities__.md) themselves.
+Services typically interact with [Data Repositories](#chapter-3-data-repositories) to get and save [Entities](#chapter-1-data-models-entities). They also perform validation and apply business-specific logic that doesn't belong in the simpler [Repositories](#chapter-3-data-repositories) or [Entities](#chapter-1-data-models-entities) themselves.
 
 ### The `OrderService`: Our Master Chef for Orders
 
@@ -737,15 +735,15 @@ public class OrderService {
 2.  **Repository Dependencies**: Notice how `OrderService` has `private final` fields for `OrderRepository`, `FoodItemRepository`, `UserRepository`, and `OrderItemRepository`. These are the "librarians" that the `OrderService` needs to talk to the database.
 3.  **Constructor (Dependency Injection)**: The `public OrderService(...)` block is a special constructor. Spring automatically detects that `OrderService` needs these repositories and **injects** (provides) them when it creates an `OrderService` object. You don't have to create them yourself!
 4.  **`@Transactional`**: This is a powerful Spring annotation. It means: "Treat all database operations inside this method (`placeOrder`) as a single, atomic unit." If any part of the `placeOrder` method fails (e.g., an error occurs while saving food items), then **all** changes made to the database by this method will be rolled back (undone). This ensures your data remains consistent.
-5.  **Initialization**: The service starts by creating a new `Order` [entity](01_data_models__entities__.md) and setting its initial status to `PENDING`. It also retrieves the `User` who is placing the order.
-6.  **Business Logic Loop**: The core of `placeOrder` is a loop that goes through each item the user wants to order (`OrderItemRequest` [DTOs](02_data_transfer_objects__dtos__.md)). For each item:
-    *   It uses `foodItemRepository.findById()` to fetch the `Fooditem` [entity](01_data_models__entities__.md) from the database.
+5.  **Initialization**: The service starts by creating a new `Order` [entity](#chapter-1-data-models-entities) and setting its initial status to `PENDING`. It also retrieves the `User` who is placing the order.
+6.  **Business Logic Loop**: The core of `placeOrder` is a loop that goes through each item the user wants to order (`OrderItemRequest` [DTOs](#chapter-2-data-transfer-objects-dtos)). For each item:
+    *   It uses `foodItemRepository.findById()` to fetch the `Fooditem` [entity](#chapter-1-data-models-entities) from the database.
     *   It applies **business rules**: `if (!foodItem.isAvailableToday())` ensures we only allow ordering of available items. `if (itemRequest.getQuantity() <= 0)` ensures a valid quantity.
     *   It calculates the subtotal for each item.
-    *   It creates an `OrderItem` [entity](01_data_models__entities__.md) for each, linking it to the `Fooditem`.
+    *   It creates an `OrderItem` [entity](#chapter-1-data-models-entities) for each, linking it to the `Fooditem`.
     *   It adds the `OrderItem` to the `newOrder` and updates the `totalOrderPrice`.
-7.  **Saving the Order**: Finally, `orderRepository.save(newOrder)` is called. Thanks to the relationships defined in our [Order entity](01_data_models__entities__.md) ([Chapter 1](01_data_models__entities__.md)), saving the `Order` automatically saves all its associated `OrderItem`s too!
-8.  **Converting to Response DTO**: The `mapToOrderResponse` helper method takes the `Order` [entity](01_data_models__entities__.md) (which now has an `id` and all its `OrderItem`s with their `id`s) and converts it into a clean `OrderResponse` [DTO](02_data_transfer_objects__dtos__.md) to be sent back to the frontend.
+7.  **Saving the Order**: Finally, `orderRepository.save(newOrder)` is called. Thanks to the relationships defined in our [Order entity](#chapter-1-data-models-entities) ([Chapter 1](#chapter-1-data-models-entities)), saving the `Order` automatically saves all its associated `OrderItem`s too!
+8.  **Converting to Response DTO**: The `mapToOrderResponse` helper method takes the `Order` [entity](#chapter-1-data-models-entities) (which now has an `id` and all its `OrderItem`s with their `id`s) and converts it into a clean `OrderResponse` [DTO](#chapter-2-data-transfer-objects-dtos) to be sent back to the frontend.
 
 ### How Business Services Work Behind the Scenes (Placing an Order)
 
@@ -753,7 +751,7 @@ Let's trace how the `placeOrder` method within our `OrderService` orchestrates t
 
 ![alt text](src/main/resources/static/images/seq5.svg)
 
-As you can see, the `OrderService` acts as the central coordinator, pulling information from different [repositories](03_data_repositories_.md), applying rules, and putting everything together before sending the final data back. The `@Transactional` annotation ensures that steps 3-17 are treated as one single, unbreakable operation.
+As you can see, the `OrderService` acts as the central coordinator, pulling information from different [repositories](#chapter-3-data-repositories), applying rules, and putting everything together before sending the final data back. The `@Transactional` annotation ensures that steps 3-17 are treated as one single, unbreakable operation.
 
 ### Other Important Canteen Business Services
 
@@ -781,25 +779,25 @@ Let's update our comparison table to include Business Services:
 | :---------------- | :------------------------------------------------- | :------------------------------------------------- | :------------------------------------------- | :----------------------------------------------- |
 | **Purpose**       | **Blueprint** for data stored in the database      | **Forms** for sending/receiving data              | **Librarian** for database interaction       | **Chef/Brain** for business logic and operations |
 | **What it is**    | A plain Java class with `@Entity`                  | A plain Java class, no special Spring annotations  | A Java `interface` extending `JpaRepository` | A Java class with `@Service`                 |
-| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](03_data_repositories_.md) to interact with DB |
+| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](#chapter-3-data-repositories) to interact with DB |
 | **Fields/Methods**| Defines data fields and relationships              | Defines fields for communication payloads          | Defines methods for CRUD operations          | Orchestrates logic, applies rules, manages transactions |
-| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | Business Services to talk to the database    | [API Endpoints](05_api_endpoints__controllers__.md) to perform complex tasks |
+| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | Business Services to talk to the database    | [API Endpoints](#chapter-5-api-endpoints-controllers) to perform complex tasks |
 | **Example**       | `Fooditem` class                                   | `FoodItemRequest`, `FoodItemResponse`              | `FoodItemRepository`                         | `OrderService`, `FoodService`                    |
 
 ### Conclusion
 
-In this chapter, we learned that **Business Services** are the core "brain" of our Smart Canteen backend. They are responsible for implementing the complex business rules, coordinating multiple database operations using [Repositories](03_data_repositories_.md), and ensuring data consistency through transactions. By organizing our logic into services, we make our application robust, maintainable, and easy to understand.
+In this chapter, we learned that **Business Services** are the core "brain" of our Smart Canteen backend. They are responsible for implementing the complex business rules, coordinating multiple database operations using [Repositories](#chapter-3-data-repositories), and ensuring data consistency through transactions. By organizing our logic into services, we make our application robust, maintainable, and easy to understand.
 
-Now that we know how our business logic is structured, how do we make these services available to the outside world, like our Smart Canteen mobile app or website? That's what we'll cover in [Chapter 5: API Endpoints (Controllers)](05_api_endpoints__controllers__.md)!
+Now that we know how our business logic is structured, how do we make these services available to the outside world, like our Smart Canteen mobile app or website? That's what we'll cover in [Chapter 5: API Endpoints (Controllers)](#chapter-5-api-endpoints-controllers)!
 
----
+
 # Chapter 5: API Endpoints (Controllers)
 
 Welcome back to our Smart Canteen Backend tutorial! So far, we've built a solid foundation:
-*   In [Chapter 1: Data Models (Entities)](01_data_models__entities__.md), we learned how to design the "blueprints" for our data (like `Fooditem` or `Order`).
-*   In [Chapter 2: Data Transfer Objects (DTOs)](02_data_transfer_objects__dtos__.md), we created "forms" for neatly sending data around.
-*   In [Chapter 3: Data Repositories](03_data_repositories_.md), we found our "librarians" that handle saving and fetching data from the database.
-*   And in [Chapter 4: Business Services](04_business_services_.md), we set up the "expert chefs" that contain the main business logic and use our repositories to perform complex tasks.
+*   In [Chapter 1: Data Models (Entities)](#chapter-1-data-models-entities), we learned how to design the "blueprints" for our data (like `Fooditem` or `Order`).
+*   In [Chapter 2: Data Transfer Objects (DTOs)](#chapter-2-data-transfer-objects-dtos), we created "forms" for neatly sending data around.
+*   In [Chapter 3: Data Repositories](#chapter-3-data-repositories), we found our "librarians" that handle saving and fetching data from the database.
+*   And in [Chapter 4: Business Services]#chapter-4-business-services), we set up the "expert chefs" that contain the main business logic and use our repositories to perform complex tasks.
 
 Now, imagine our Smart Canteen has a fully functional kitchen with chefs, ingredients, and organizers. But how do customers (like a student using the mobile app or a manager on the website) actually *place an order* or *see what food is available*? They can't directly walk into the kitchen!
 
@@ -812,7 +810,7 @@ Our backend application needs a way to **listen for requests** from the outside 
 
 This is exactly where **API Endpoints (Controllers)** come in!
 
-**Think of API Endpoints (Controllers) as the canteen's reception desk.** When a student or manager sends a request (e.g., "show me all available food" or "place an order"), the **Controller** receives it. It then figures out which "chef" ([Business Service](04_business_services_.md)) can handle the request, passes it on, and finally sends the "dish" ([Response DTO](02_data_transfer_objects__dtos__.md)) back to the client.
+**Think of API Endpoints (Controllers) as the canteen's reception desk.** When a student or manager sends a request (e.g., "show me all available food" or "place an order"), the **Controller** receives it. It then figures out which "chef" ([Business Service]#chapter-4-business-services)) can handle the request, passes it on, and finally sends the "dish" ([Response DTO](#chapter-2-data-transfer-objects-dtos)) back to the client.
 
 Controllers define the specific URLs (web addresses) and HTTP methods (like GET, POST, PUT, DELETE) through which the frontend interacts with our backend.
 
@@ -821,8 +819,8 @@ Controllers define the specific URLs (web addresses) and HTTP methods (like GET,
 In our Smart Canteen backend, **Controllers** are special Java classes that:
 1.  **Listen for incoming HTTP requests**: They are like the "ears" of our backend, constantly waiting for someone to talk to them through a specific URL.
 2.  **Map URLs to methods**: Each method in a Controller is linked to a unique URL path (like `/api/food/available`) and an HTTP method (like `GET` for getting data, `POST` for sending new data).
-3.  **Receive and send [DTOs](02_data_transfer_objects__dtos__.md)**: They typically receive [Request DTOs](02_data_transfer_objects__dtos__.md) and return [Response DTOs](02_data_transfer_objects__dtos__.md).
-4.  **Delegate to [Business Services](04_business_services_.md)**: Controllers don't contain complex business logic themselves. Their main job is to receive a request, tell the appropriate [Business Service](04_business_services_.md) to do the actual work, and then return the result.
+3.  **Receive and send [DTOs](#chapter-2-data-transfer-objects-dtos)**: They typically receive [Request DTOs](#chapter-2-data-transfer-objects-dtos) and return [Response DTOs](#chapter-2-data-transfer-objects-dtos).
+4.  **Delegate to [Business Services]#chapter-4-business-services)**: Controllers don't contain complex business logic themselves. Their main job is to receive a request, tell the appropriate [Business Service]#chapter-4-business-services) to do the actual work, and then return the result.
 5.  **Handle HTTP Responses**: They decide what HTTP status code (like 200 OK, 201 Created, 404 Not Found) to send back, along with the data.
 
 ### The `FoodController`: Our Food Menu Receptionist
@@ -891,16 +889,16 @@ public class FoodController {
 
 1.  **`@RestController`**: This is a special Spring annotation that marks this Java class as a "Controller" and tells Spring to automatically convert the responses into a format like JSON, which is easily understood by web browsers or mobile apps.
 2.  **`@RequestMapping("/api/food")`**: This annotation on the class level defines the "base path" for all methods inside this controller. So, any URL handled by this controller will start with `/api/food`.
-3.  **`private final FoodService foodService;`**: Just like our [services](04_business_services_.md) needed [repositories](03_data_repositories_.md), our controllers need access to the relevant [Business Services](04_business_services_.md) to do their work.
+3.  **`private final FoodService foodService;`**: Just like our [services]#chapter-4-business-services) needed [repositories](#chapter-3-data-repositories), our controllers need access to the relevant [Business Services]#chapter-4-business-services) to do their work.
 4.  **`public FoodController(FoodService foodService)`**: This is how Spring "injects" (provides) an instance of `FoodService` into our controller. You just declare that you need it, and Spring takes care of finding and giving it to you. This is called **Dependency Injection**.
 5.  **`@GetMapping("/available")`**: This annotation maps an incoming HTTP `GET` request to the specific method `getAvailableFoodItems()`. Combined with the class-level `@RequestMapping`, the full URL this method responds to is `/api/food/available`.
-6.  **`@PreAuthorize(...)`**: This is a security annotation (we'll learn more in [Chapter 6: Security Configuration](06_security_configuration_.md)). For now, just know it restricts who can access this specific endpoint (e.g., only students, managers, and admins can see available food).
-7.  **`List<FoodItemResponse> foodItems = foodService.getAvailableFoodItems();`**: This is the core job of the controller: it **delegates** the actual business logic to the `foodService`. The `foodService` (our "chef") does the work, fetches the data, and returns a list of `FoodItemResponse` [DTOs](02_data_transfer_objects__dtos__.md).
+6.  **`@PreAuthorize(...)`**: This is a security annotation (we'll learn more in [Chapter 6: Security Configuration](#chapter-6-security-configuration)). For now, just know it restricts who can access this specific endpoint (e.g., only students, managers, and admins can see available food).
+7.  **`List<FoodItemResponse> foodItems = foodService.getAvailableFoodItems();`**: This is the core job of the controller: it **delegates** the actual business logic to the `foodService`. The `foodService` (our "chef") does the work, fetches the data, and returns a list of `FoodItemResponse` [DTOs](#chapter-2-data-transfer-objects-dtos).
 8.  **`return ResponseEntity.ok(foodItems);`**: `ResponseEntity` is a powerful Spring class that allows us to fully control the HTTP response. `ResponseEntity.ok()` is a shortcut for sending an HTTP status code of `200 OK` along with the `foodItems` data.
 9.  **`@PostMapping("/add")`**: This maps an incoming HTTP `POST` request to the `createFoodItem()` method. The full URL is `/api/food/add`. `POST` is typically used for creating new resources.
-10. **`@RequestBody FoodItemRequest foodItemRequest`**: This annotation tells Spring to take the data sent in the "body" of the incoming HTTP request (which will be a [FoodItemRequest DTO](02_data_transfer_objects__dtos__.md) in JSON format) and automatically convert it into a `FoodItemRequest` Java object.
-11. **`@Valid`**: This annotation works with our [DTOs](02_data_transfer_objects__dtos__.md) to ensure that the incoming data meets certain rules (e.g., a field isn't empty). If the data doesn't pass validation, Spring automatically sends an error response.
-12. **`return new ResponseEntity<>(newFoodItem, HttpStatus.CREATED);`**: This sends back the newly created `FoodItemResponse` [DTO](02_data_transfer_objects__dtos__.md) along with an HTTP `201 Created` status code, which is standard for successful creation.
+10. **`@RequestBody FoodItemRequest foodItemRequest`**: This annotation tells Spring to take the data sent in the "body" of the incoming HTTP request (which will be a [FoodItemRequest DTO](#chapter-2-data-transfer-objects-dtos) in JSON format) and automatically convert it into a `FoodItemRequest` Java object.
+11. **`@Valid`**: This annotation works with our [DTOs](#chapter-2-data-transfer-objects-dtos) to ensure that the incoming data meets certain rules (e.g., a field isn't empty). If the data doesn't pass validation, Spring automatically sends an error response.
+12. **`return new ResponseEntity<>(newFoodItem, HttpStatus.CREATED);`**: This sends back the newly created `FoodItemResponse` [DTO](#chapter-2-data-transfer-objects-dtos) along with an HTTP `201 Created` status code, which is standard for successful creation.
 
 ### Example Interaction: Getting Available Food
 
@@ -940,7 +938,7 @@ Now let's see how `OrderController` works when a student places an order:
 
 **Input (from mobile app/browser):**
 A `POST` request to the URL: `http://localhost:8080/api/orders/place`
-With a JSON body (the [OrderRequest DTO](02_data_transfer_objects__dtos__.md)):
+With a JSON body (the [OrderRequest DTO](#chapter-2-data-transfer-objects-dtos)):
 ```json
 {
     "items": [
@@ -986,7 +984,7 @@ Let's trace the journey of a request for available food items:
 
 ![alt text](src/main/resources/static/images/seq3-2025-08-19-073042.svg)
 
-As you can see, the Controller is the first point of contact. It acts as a lightweight receptionist, quickly passing the request to the correct "chef" ([Business Service](04_business_services_.md)) and then preparing the final "dish" ([Response DTO](02_data_transfer_objects__dtos__.md)) to send back. It doesn't cook; it directs and presents!
+As you can see, the Controller is the first point of contact. It acts as a lightweight receptionist, quickly passing the request to the correct "chef" ([Business Service]#chapter-4-business-services)) and then preparing the final "dish" ([Response DTO](#chapter-2-data-transfer-objects-dtos)) to send back. It doesn't cook; it directs and presents!
 
 ### Other Important Canteen Controllers
 
@@ -1009,21 +1007,21 @@ Let's update our comparison table one last time to include API Endpoints (Contro
 | :---------------- | :------------------------------------------------- | :------------------------------------------------- | :------------------------------------------- | :----------------------------------------------- | :--------------------------------------------- |
 | **Purpose**       | **Blueprint** for data stored in the database      | **Forms** for sending/receiving data              | **Librarian** for database interaction       | **Chef/Brain** for business logic and operations | **Reception Desk** for incoming requests       |
 | **What it is**    | A plain Java class with `@Entity`                  | A plain Java class, no special Spring annotations  | A Java `interface` extending `JpaRepository` | A Java class with `@Service`                 | A Java class with `@RestController`          |
-| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](03_data_repositories_.md) to interact with DB | **No direct DB link**; delegates to [Services](04_business_services_.md) |
+| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](#chapter-3-data-repositories) to interact with DB | **No direct DB link**; delegates to [Services]#chapter-4-business-services) |
 | **Fields/Methods**| Defines data fields and relationships              | Defines fields for communication payloads          | Defines methods for CRUD operations          | Orchestrates logic, applies rules, manages transactions | Defines URL paths and HTTP methods             |
-| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | [Business Services](04_business_services_.md) to talk to the database | [API Endpoints](05_api_endpoints__controllers__.md) to perform complex tasks | Frontend (mobile apps, web apps)               |
+| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | [Business Services]#chapter-4-business-services) to talk to the database | [API Endpoints](#chapter-5-api-endpoints-controllers) to perform complex tasks | Frontend (mobile apps, web apps)               |
 | **Example**       | `Fooditem` class                                   | `FoodItemRequest`, `FoodItemResponse`              | `FoodItemRepository`                         | `OrderService`, `FoodService`                    | `FoodController`, `OrderController`          |
 
 ### Conclusion
 
-In this chapter, we learned that **API Endpoints (Controllers)** are the crucial "front desk" of our Smart Canteen backend. They are responsible for receiving incoming requests, mapping them to the correct backend operations, delegating the complex work to [Business Services](04_business_services_.md), and sending back well-structured responses. Controllers act as the bridge between our internal backend logic and the external applications (like mobile apps and websites) that interact with our system.
+In this chapter, we learned that **API Endpoints (Controllers)** are the crucial "front desk" of our Smart Canteen backend. They are responsible for receiving incoming requests, mapping them to the correct backend operations, delegating the complex work to [Business Services]#chapter-4-business-services), and sending back well-structured responses. Controllers act as the bridge between our internal backend logic and the external applications (like mobile apps and websites) that interact with our system.
 
-Now that we understand how requests flow into our system, the next critical step is to learn how we protect our canteen's operations and ensure that only authorized users can access specific features. That's what we'll explore in [Chapter 6: Security Configuration](06_security_configuration_.md)!
+Now that we understand how requests flow into our system, the next critical step is to learn how we protect our canteen's operations and ensure that only authorized users can access specific features. That's what we'll explore in [Chapter 6: Security Configuration](#chapter-6-security-configuration)!
 
----
+
 # Chapter 6: Security Configuration
 
-Welcome to the final chapter of our Smart Canteen Backend tutorial! We've come a long way. We've learned how to design our data blueprints ([Chapter 1: Data Models (Entities)](01_data_models__entities__.md)), how to send data cleanly ([Chapter 2: Data Transfer Objects (DTOs)](02_data_transfer_objects__dtos__.md)), how to store and retrieve data from the database ([Chapter 3: Data Repositories](03_data_repositories_.md)), and how to implement the canteen's core business rules ([Chapter 4: Business Services](04_business_services_.md)). Finally, in [Chapter 5: API Endpoints (Controllers)](05_api_endpoints__controllers__.md), we learned how to open up our backend so that the mobile app or website can talk to it.
+Welcome to the final chapter of our Smart Canteen Backend tutorial! We've come a long way. We've learned how to design our data blueprints ([Chapter 1: Data Models (Entities)](#chapter-1-data-models-entities)), how to send data cleanly ([Chapter 2: Data Transfer Objects (DTOs)](#chapter-2-data-transfer-objects-dtos)), how to store and retrieve data from the database ([Chapter 3: Data Repositories](#chapter-3-data-repositories)), and how to implement the canteen's core business rules ([Chapter 4: Business Services]#chapter-4-business-services)). Finally, in [Chapter 5: API Endpoints (Controllers)](#chapter-5-api-endpoints-controllers), we learned how to open up our backend so that the mobile app or website can talk to it.
 
 Now, imagine our Smart Canteen is fully operational. But what if anyone could just walk into the manager's office, access sensitive financial records, or change food prices? That would be chaos! We need rules to decide who can do what.
 
@@ -1072,7 +1070,7 @@ Authorization is the process of **deciding what you are allowed to do** based on
 
 To enforce these rules, our backend uses **security filters**.
 
-*   **Imagine a security guard at every important door.** Before any request reaches our [API Endpoints (Controllers)](05_api_endpoints__controllers__.md) or [Business Services](04_business_services_.md), it first passes through these filters.
+*   **Imagine a security guard at every important door.** Before any request reaches our [API Endpoints (Controllers)](#chapter-5-api-endpoints-controllers) or [Business Services]#chapter-4-business-services), it first passes through these filters.
 *   One key filter is the **JWT Authentication Filter**. It's designed to:
     *   Look for the JWT token in the incoming request.
     *   Validate the token (is it authentic? is it expired?).
@@ -1085,13 +1083,13 @@ Let's trace how a user logs in and gets their "identity badge" (JWT).
 
 1.  **User Sends Login Request**: The user opens the Smart Canteen app, enters their username and password, and taps "Login". This sends a `POST` request to `/api/auth/login`.
 
-2.  **`AuthController` Handles Login**: Our `AuthController` (from [Chapter 5](05_api_endpoints__controllers__.md)) is responsible for the `/api/auth/login` endpoint. It receives the username and password in a [LoginRequest DTO](02_data_transfer_objects__dtos__.md).
+2.  **`AuthController` Handles Login**: Our `AuthController` (from [Chapter 5](#chapter-5-api-endpoints-controllers)) is responsible for the `/api/auth/login` endpoint. It receives the username and password in a [LoginRequest DTO](#chapter-2-data-transfer-objects-dtos).
 
 3.  **Authentication Manager Authenticates**: The `AuthController` passes these credentials to Spring Security's `AuthenticationManager`. This manager works with a `CustomUserDetailsService` (our user details database) and a `PasswordEncoder` (to decrypt/check password) to verify the user.
 
 4.  **JWT Token Generated**: If authentication is successful, a `JwtTokenUtil` (our badge maker) generates a new JWT token, encoding the user's ID, username, and role into it.
 
-5.  **Token Sent Back**: The `AuthController` sends this JWT token back to the mobile app in a [JwtResponse DTO](02_data_transfer_objects__dtos__.md). The mobile app then stores this token to use for future requests.
+5.  **Token Sent Back**: The `AuthController` sends this JWT token back to the mobile app in a [JwtResponse DTO](#chapter-2-data-transfer-objects-dtos). The mobile app then stores this token to use for future requests.
 
 Here's a simplified look at the login process in `AuthController` and the `JwtTokenUtil`:
 
@@ -1227,7 +1225,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 **Explanation:**
 *   This filter runs for every incoming HTTP request.
 *   It checks for the `Authorization: Bearer <JWT>` header.
-*   It then extracts the `username` from the JWT and loads the full `UserDetails` (including roles) from our `CustomUserDetailsService` (which talks to the [UserRepository](03_data_repositories_.md)).
+*   It then extracts the `username` from the JWT and loads the full `UserDetails` (including roles) from our `CustomUserDetailsService` (which talks to the [UserRepository](#chapter-3-data-repositories)).
 *   It validates the token using `JwtTokenUtil`.
 *   If everything is good, it sets the user's authentication information into `SecurityContextHolder`, which is how Spring Security knows who is making the request.
 
@@ -1286,7 +1284,7 @@ public class SecurityConfig {
 ```
 **Explanation:**
 *   **`@Configuration` & `@EnableWebSecurity`**: These annotations tell Spring to set up web security based on this class.
-*   **`@EnableMethodSecurity(prePostEnabled = true)`**: This is super important! It enables the `@PreAuthorize` annotation we saw on methods in our [Controllers](05_api_endpoints__controllers__.md) (e.g., `FoodController`).
+*   **`@EnableMethodSecurity(prePostEnabled = true)`**: This is super important! It enables the `@PreAuthorize` annotation we saw on methods in our [Controllers](#chapter-5-api-endpoints-controllers) (e.g., `FoodController`).
 *   **`passwordEncoder()`**: This bean provides the tool to encrypt and verify passwords. We use `BCryptPasswordEncoder` for strong, one-way encryption.
 *   **`authenticationJwtTokenFilter()`**: This registers our `JwtAuthenticationFilter` with Spring.
 *   **`filterChain(HttpSecurity http)`**: This is the heart of the security configuration.
@@ -1314,7 +1312,7 @@ Let's trace how the system handles a request for a protected resource, ensuring 
 3.  The filter asks the **Authentication System** (a combination of `JwtTokenUtil`, `CustomUserDetailsService`, and `UserRepository`) to verify the token and confirm who you are and what your roles are.
 4.  If the token is valid, the filter sets up your identity in Spring Security, allowing the request to continue to the **API Endpoint (Controller)**.
 5.  The **API Endpoint** then performs an authorization check based on the URL rules (`SecurityConfig`) or method-level rules (`@PreAuthorize`).
-6.  If you have the right permissions, the request goes to the [Business Service](04_business_services_.md) to do its work. If not, you get an error back.
+6.  If you have the right permissions, the request goes to the [Business Service]#chapter-4-business-services) to do its work. If not, you get an error back.
 
 ### Key Security Components in Smart Canteen
 
@@ -1334,9 +1332,9 @@ Let's trace how the system handles a request for a protected resource, ensuring 
 | :---------------- | :------------------------------------------------- | :------------------------------------------------- | :------------------------------------------- | :----------------------------------------------- | :--------------------------------------------- | :---------------------------------------------- |
 | **Purpose**       | **Blueprint** for data stored in the database      | **Forms** for sending/receiving data              | **Librarian** for database interaction       | **Chef/Brain** for business logic and operations | **Reception Desk** for incoming requests       | **Security Guard/Rulebook** for access control  |
 | **What it is**    | A plain Java class with `@Entity`                  | A plain Java class, no special Spring annotations  | A Java `interface` extending `JpaRepository` | A Java class with `@Service`                 | A Java class with `@RestController`          | Spring `@Configuration` class, JWT components   |
-| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](03_data_repositories_.md) to interact with DB | No direct DB link; delegates to [Services](04_business_services_.md) | Interacts with DB via `CustomUserDetailsService` to verify user details/roles |
+| **Database Link** | Directly mapped to a database table                | No direct link                                     | Handles all database interactions            | Uses [Repositories](#chapter-3-data-repositories) to interact with DB | No direct DB link; delegates to [Services]#chapter-4-business-services) | Interacts with DB via `CustomUserDetailsService` to verify user details/roles |
 | **Fields/Methods**| Defines data fields and relationships              | Defines fields for communication payloads          | Defines methods for CRUD operations          | Orchestrates logic, applies rules, manages transactions | Defines URL paths and HTTP methods             | Configures filters, authentication, authorization rules |
-| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | [Business Services](04_business_services_.md) to talk to the database | [API Endpoints](05_api_endpoints__controllers__.md) to perform complex tasks | Frontend (mobile apps, web apps)               | All layers (intercepts requests before they reach Controllers/Services) |
+| **Used By**       | Backend's internal data logic, database persistence | Frontend and Backend for data exchange             | [Business Services]#chapter-4-business-services) to talk to the database | [API Endpoints](#chapter-5-api-endpoints-controllers) to perform complex tasks | Frontend (mobile apps, web apps)               | All layers (intercepts requests before they reach Controllers/Services) |
 | **Example**       | `Fooditem` class                                   | `FoodItemRequest`, `FoodItemResponse`              | `FoodItemRepository`                         | `OrderService`, `FoodService`                    | `FoodController`, `OrderController`          | `SecurityConfig`, `JwtAuthenticationFilter`     |
 
 ### Conclusion
@@ -1345,4 +1343,3 @@ In this chapter, we've explored the critical role of **Security Configuration** 
 
 This concludes our journey through the core concepts of the `smart-canteen-backend` project. We hope this tutorial has provided a clear and beginner-friendly understanding of how a modern backend application is structured and functions!
 
----
